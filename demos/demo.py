@@ -1,14 +1,33 @@
 import queue
 import threading
+import time
 import tkinter as tk
 from tkinter import ttk
 
 import tkg
 
 
+class TaskModel:
+    def __init__(self):
+        self.progress = 0
+        self._stop_event = threading.Event()
+
+    def run_task(self, progress_queue):
+        self._stop_event.clear()
+        for i in range(101):
+            if self._stop_event.is_set():
+                break
+            self.progress = i
+            progress_queue.put(i)
+            time.sleep(0.05)  # simulate work
+
+    def stop(self):
+        self._stop_event.set()
+
+
 class TaskController:
     def __init__(self, root):
-        self.model = None
+        self.model = TaskModel()
         self.view = TaskView(parent=root, controller=self)
         self.progress_queue = queue.Queue()
         self.thread = None
@@ -60,25 +79,20 @@ class TaskView(tk.Frame):
         self.progress["value"] = value
 
 
-class MainView(tkg.widgets.MainWindow):
-    def __init__(self, controller):
-        super().__init__()
-        self.controller = controller
-
-
 class Controller:
     def __init__(self):
         self.model = None
-        self.main_view = MainView(self)
+        self.view = tkg.views.Main(self)
 
         # Register clean shutdown method
-        self.main_view.on_close(self.close)
+        self.view.on_close(self.close)
 
-        self.task_controller = TaskController(self.main_view)
+        self.task = TaskController(self.view)
 
-        self.main_view.run()
+        self.view.run()
 
     def close(self):
+        # Demonstration of `view.on_close` callback
         print(f"{self.__class__.__name__}.close")
 
 

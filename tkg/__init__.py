@@ -1,3 +1,3 @@
-from . import widgets
+from . import views, widgets
 
-__all__ = ["widgets"]
+__all__ = ["views", "widgets"]

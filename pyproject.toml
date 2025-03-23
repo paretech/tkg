@@ -1,0 +1,16 @@
+# Resources:
+# - https://packaging.python.org/en/latest/guides/writing-pyproject-toml
+# - https://setuptools.pypa.io/en/latest/userguide/package_discovery.html
+
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tkg"
+requires-python = ">= 3.10"
+description = "Tkinter GUI (TKG) - Bits and Bobs"
+version = "0"
+
+[tool.setuptools]
+packages = ["tkg"]

@@ -60,7 +60,7 @@ class TaskView(tk.Frame):
         self.progress["value"] = value
 
 
-class View(tkg.widgets.MainWindow):
+class MainView(tkg.widgets.MainWindow):
     def __init__(self, controller):
         super().__init__()
         self.controller = controller
@@ -69,14 +69,14 @@ class View(tkg.widgets.MainWindow):
 class Controller:
     def __init__(self):
         self.model = None
-        self.view = View(self)
+        self.main_view = MainView(self)
 
         # Register clean shutdown method
-        self.view.on_close(self.close)
+        self.main_view.on_close(self.close)
 
-        self.task_controller = TaskController(self.view)
+        self.task_controller = TaskController(self.main_view)
 
-        self.view.run()
+        self.main_view.run()
 
     def close(self):
         print(f"{self.__class__.__name__}.close")
@@ -84,5 +84,5 @@ class Controller:
 
 if __name__ == "__main__":
     app = Controller()
-    True
-    True
+
+    True  # No op for setting breakpoint

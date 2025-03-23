@@ -22,8 +22,6 @@ class MainWindow(tk.Tk):
 
         self.configure(title)
 
-        self._close_callback = None
-
     def configure(self, title):
         """Configure window parameters"""
 
@@ -60,6 +58,10 @@ class MainWindow(tk.Tk):
         Often used by controller to register closing actions. Callback used
         instead of other mechanisms so that Tk related operations are purely in
         view module.
+
+        Callback will be called if user clicks exit widget from graphical
+        interface or when sending SIGINT (e.g., "ctrl + c") from command line
+        interface.
         """
 
         # Keeping this logic in widgets prevents controllers from having to know

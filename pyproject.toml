@@ -7,10 +7,10 @@ requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tkg"
-requires-python = ">= 3.10"
-description = "Tkinter GUI (TKG) - Bits and Bobs"
+name = "tkt"
+requires-python = ">= 3.12"
+description = "Tkinter Toys (TKT)"
 version = "0"
 
 [tool.setuptools]
-packages = ["tkg"]
+packages = ["tkt"]

@@ -34,6 +34,18 @@ class MainWindow(tk.Tk):
         Commonly used in conjunction with `.show()` to hide window until
         configuration and initial rendering are complete such that visible
         artifacts are not shown to user.
+
+        Per the Tcl/Tk 8.6 docs,
+
+            Arranges for window to be withdrawn from the screen. This causes the
+            window to be unmapped and forgotten about by the window manager. If
+            the window has never been mapped, then this command causes the
+            window to be mapped in the withdrawn state. Not all window managers
+            appear to know how to handle windows that are mapped in the
+            withdrawn state. Note that it sometimes seems to be necessary to
+            withdraw a window and then re-map it (e.g. with wm deiconify) to get
+            some window managers to pay attention to changes in window
+            attributes such as group.
         """
         self.withdraw()
 
@@ -43,8 +55,28 @@ class MainWindow(tk.Tk):
         Commonly used in conjunction with `.hide()` to hide window until
         configuration and initial rendering are complete such that visible
         artifacts are not shown to user.
+
+        Per the Tcl/Tk docs,
+
+            On Windows it will raise this widget and give it the focus.
         """
         self.after(0, self.deiconify)
+
+    def update(self):
+        """Force changes to happen
+
+        If some changes are not taking effect, this method may be useful as
+        workaround for bugs that affect the operation of window manager.
+        """
+
+        self.hide()
+
+    def elevate(self):
+        """Needed so the window pops up on top on Windows..."""
+
+        self.iconify()
+        self.update()
+        self.deiconify()
 
     def run(self):
         try:
